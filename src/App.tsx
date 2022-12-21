@@ -1,24 +1,17 @@
-import * as React from "react";
 import { Box, ThemeProvider } from "@mui/system";
 import { Header } from "./components/Header";
 import { Layout } from "./components/Layout";
 import { appTheme } from "./config/theme";
+import { Routes, Route } from "react-router-dom";
+import { CategoryList } from "./features/categories/listCategory";
+import { CategoryCreate } from "./features/categories/createCategory";
+import { CategoryEdit } from "./features/categories/editCategory";
 import { Typography } from "@mui/material";
-import { Routes, Route, Link } from "react-router-dom";
 
-const Home = () => (
-  <Box>
-    <Typography variant="h3" component="h1">
-      HOME
-    </Typography>
-  </Box>
-);
-
-const About = () => (
-  <Box>
-    <Typography variant="h3" component="h1">
-      ABOUT
-    </Typography>
+const NOT_FOUND = () => (
+  <Box sx={{ color: "white" }}>
+    <Typography variant="h1">404</Typography>
+    <Typography variant="h2">Page not found</Typography>
   </Box>
 );
 
@@ -35,8 +28,12 @@ export default function App() {
         <Header />
         <Layout>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="about" element={<About />} />
+            <Route path="/" element={<CategoryList />} />
+            <Route path="categories" element={<CategoryList />} />
+            <Route path="categories/create" element={<CategoryCreate />} />
+            <Route path="categories/edit/:id" element={<CategoryEdit />} />
+
+            <Route path="*" element={<NOT_FOUND />} />
           </Routes>
         </Layout>
       </Box>
