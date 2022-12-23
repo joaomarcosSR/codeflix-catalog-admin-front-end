@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-import { Category } from "./../CategorySlice";
+import { Category } from "../../../types/Category";
 
 type Props = {
   category: Category;

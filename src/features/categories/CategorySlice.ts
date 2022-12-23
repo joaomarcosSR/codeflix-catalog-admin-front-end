@@ -1,19 +1,11 @@
 import {
+  Category,
   CategoryParams,
   CreateCategoryResult,
   ListCategoryResult,
   UpdateCategoryResult,
 } from "../../types/Category";
 import { apiSlice } from "../api/apiSlice";
-
-export interface Category {
-  id: string;
-  name: string;
-  description: null | string;
-  is_active: boolean;
-  created_at: string;
-  deleted_at: null | string;
-}
 
 const endpointUrl = "/categories";
 

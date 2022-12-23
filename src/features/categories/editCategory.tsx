@@ -2,8 +2,8 @@ import { Box, Paper, Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Category } from "../../types/Category";
 import {
-  Category,
   defaultCategory,
   useGetCategoryByIdQuery,
   useUpdateCategoryMutation,

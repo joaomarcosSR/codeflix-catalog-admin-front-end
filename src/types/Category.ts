@@ -1,4 +1,11 @@
-import { Category } from "../features/categories/CategorySlice";
+export interface Category {
+  id: string;
+  name: string;
+  description: null | string;
+  is_active: boolean;
+  created_at: string;
+  deleted_at: null | string;
+}
 
 export interface CategoryParams {
   page?: number;

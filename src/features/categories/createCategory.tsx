@@ -1,11 +1,8 @@
 import { Box, Paper, Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import {
-  Category,
-  defaultCategory,
-  useCreateCategoryMutation,
-} from "./CategorySlice";
+import { Category } from "../../types/Category";
+import { defaultCategory, useCreateCategoryMutation } from "./CategorySlice";
 import { CategoryForm } from "./components/CategoryForm";
 
 export const CategoryCreate = () => {
