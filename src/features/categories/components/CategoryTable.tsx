@@ -9,10 +9,10 @@ import {
   GridToolbar,
 } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
-import { Result } from "../../../types/Category";
+import { ListCategoryResult } from "../../../types/Category";
 
 type Props = {
-  data: Result | undefined;
+  data: ListCategoryResult | undefined;
   perPage: number;
   isFetching: boolean;
   rowsPerPage?: number[];
@@ -66,7 +66,7 @@ export function CategoriesTable({
 
   const rows = data ? mapDataToGridRows(data) : [];
 
-  function mapDataToGridRows(data: Result): GridRowsProp {
+  function mapDataToGridRows(data: ListCategoryResult): GridRowsProp {
     const { items: categories } = data;
     return categories.map((category) => ({
       id: category.id,
