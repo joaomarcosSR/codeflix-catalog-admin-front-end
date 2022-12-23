@@ -1,86 +1,56 @@
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
+import { GridFilterModel } from "@mui/x-data-grid";
+import { useSnackbar } from "notistack";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useAppSelector } from "../../app/hooks";
-import { selectCategories } from "./CategorySlice";
-import DeleteIcon from "@mui/icons-material/Delete";
 import {
-  DataGrid,
-  GridColDef,
-  GridRenderCellParams,
-  GridRowsProp,
-  GridToolbar,
-} from "@mui/x-data-grid";
+  useDeleteCategoryMutation,
+  useGetCategoriesQuery,
+} from "./CategorySlice";
+import { CategoriesTable } from "./components/CategoryTable";
 
 export const CategoryList = () => {
-  const categories = useAppSelector(selectCategories);
+  const [page, setPage] = useState(0);
+  const [perPage, setPerPage] = useState(10);
+  const [rowsPerPage] = useState([10, 25, 50, 100]);
+  const [search, setSearch] = useState("");
 
-  const componentsProps = {
-    toolbar: {
-      showQuickFilter: true,
-      quickFilterProps: { debounceMs: 500 },
-    },
-  };
+  const options = { page, perPage, search };
 
-  const rows: GridRowsProp = categories.map((category) => ({
-    id: category.id,
-    name: category.name,
-    isActive: category.is_active,
-    createdAt: new Date(category.created_at).toLocaleDateString("pt-Br"),
-    description: category.description,
-  }));
+  const { data, isFetching, error } = useGetCategoriesQuery(options);
+  const [deleteCategory, deleteCategoryStatus] = useDeleteCategoryMutation();
+  const { enqueueSnackbar } = useSnackbar();
 
-  const columns: GridColDef[] = [
-    {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
-      renderCell: renderNameCell,
-    },
-    {
-      field: "isActive",
-      headerName: "Active",
-      flex: 1,
-      type: "boolean",
-      renderCell: renderIsActiveCell,
-    },
-    { field: "createdAt", headerName: "Created At", flex: 1 },
-    {
-      field: "id",
-      headerName: "Actions",
-      flex: 1,
-      renderCell: renderActionsCell,
-    },
-  ];
-
-  function renderNameCell(row: GridRenderCellParams) {
-    return (
-      <Link
-        style={{ textDecoration: "none" }}
-        to={`/categories/edit/${row.id}`}
-      >
-        <Typography color="primary">{row.value}</Typography>
-      </Link>
-    );
+  function handleOnPageChange(page: number) {
+    setPage(page);
   }
 
-  function renderActionsCell(row: GridRenderCellParams) {
-    return (
-      <IconButton
-        color="secondary"
-        onClick={() => console.log(row.value)}
-        aria-label="delete"
-      >
-        <DeleteIcon />
-      </IconButton>
-    );
+  function handleOnPageSizeChange(perPage: number) {
+    setPerPage(perPage);
   }
 
-  function renderIsActiveCell(row: GridRenderCellParams) {
-    return (
-      <Typography color={row.value ? "primary" : "secondary"}>
-        {row.value ? "Active" : "Inactive"}
-      </Typography>
-    );
+  function handleFilterChange(filterModel: GridFilterModel) {
+    if (filterModel.quickFilterValues?.length) {
+      setSearch(filterModel.quickFilterValues.join(""));
+    } else {
+      setSearch("");
+    }
+  }
+
+  async function handleDeleteCategory(id: string) {
+    await deleteCategory({ id });
+  }
+
+  useEffect(() => {
+    if (deleteCategoryStatus.isSuccess) {
+      enqueueSnackbar("Category deleted successfully", { variant: "success" });
+    } else if (deleteCategoryStatus.error) {
+      enqueueSnackbar("Category not deleted", { variant: "error" });
+    }
+  }, [deleteCategoryStatus, enqueueSnackbar]);
+
+  if (error) {
+    return <Typography>Error fetching categories</Typography>;
   }
 
   return (
@@ -97,19 +67,16 @@ export const CategoryList = () => {
         </Button>
       </Box>
 
-      <Box sx={{ display: "flex", height: 600 }}>
-        <DataGrid
-          columns={columns}
-          components={{ Toolbar: GridToolbar }}
-          componentsProps={componentsProps}
-          disableColumnFilter={true}
-          disableColumnSelector={true}
-          disableDensitySelector={true}
-          disableSelectionOnClick={true}
-          rows={rows}
-          rowsPerPageOptions={[2, 20, 50, 100]}
-        />
-      </Box>
+      <CategoriesTable
+        data={data}
+        perPage={perPage}
+        rowsPerPage={rowsPerPage}
+        isFetching={isFetching}
+        handleOnPageChange={handleOnPageChange}
+        handleFilterChange={handleFilterChange}
+        handleOnPageSizeChange={handleOnPageSizeChange}
+        handleDelete={handleDeleteCategory}
+      />
     </Box>
   );
 };
