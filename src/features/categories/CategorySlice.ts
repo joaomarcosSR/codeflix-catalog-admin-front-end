@@ -9,6 +9,15 @@ import { apiSlice } from "../api/apiSlice";
 
 const endpointUrl = "/categories";
 
+export const initialState: Category = {
+  id: "",
+  name: "",
+  description: "",
+  is_active: false,
+  created_at: "",
+  deleted_at: null,
+};
+
 function parseQueryParams(params: CategoryParams): string {
   const query = new URLSearchParams();
 
@@ -24,10 +33,6 @@ function parseQueryParams(params: CategoryParams): string {
     query.append("search", params.search);
   }
 
-  if (params.isActive) {
-    query.append("is_active", params.isActive.toString());
-  }
-
   return query.toString();
 }
 
@@ -40,7 +45,7 @@ function getCategoryById(id: string): string {
 }
 
 function getCategories({ page = 0, perPage = 10, search = "" }): string {
-  const params = { page, perPage, search, isActive: true };
+  const params = { page, perPage, search };
   return `${endpointUrl}?${parseQueryParams(params)}`;
 }
 
@@ -83,17 +88,6 @@ export const categoriesApiSlice = apiSlice.injectEndpoints({
     }),
   }),
 });
-
-export function defaultCategory(): Category {
-  return {
-    id: "",
-    name: "",
-    description: "",
-    is_active: false,
-    created_at: "",
-    deleted_at: null,
-  };
-}
 
 export const {
   useCreateCategoryMutation,

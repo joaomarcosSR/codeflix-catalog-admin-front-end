@@ -11,7 +11,6 @@ export interface CategoryParams {
   page?: number;
   perPage?: number;
   search?: string;
-  isActive?: boolean;
 }
 
 export interface ListCategoryResult {

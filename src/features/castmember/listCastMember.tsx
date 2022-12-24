@@ -4,12 +4,12 @@ import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  useDeleteCategoryMutation,
-  useGetCategoriesQuery,
-} from "./CategorySlice";
-import { CategoriesTable } from "./components/CategoryTable";
+  useDeleteCastMemberMutation,
+  useGetCastMembersQuery,
+} from "./CastMemberSlice";
+import { CastMembersTable } from "./components/CastMemberTable";
 
-export const CategoryList = () => {
+export const CastMemberList = () => {
   const [options, setOptions] = useState({
     page: 0,
     perPage: 10,
@@ -17,8 +17,9 @@ export const CategoryList = () => {
     rowsPerPage: [10, 25, 50, 100],
   });
 
-  const { data, isFetching, error } = useGetCategoriesQuery(options);
-  const [deleteCategory, deleteCategoryStatus] = useDeleteCategoryMutation();
+  const { data, isFetching, error } = useGetCastMembersQuery(options);
+  const [deleteCastMember, deleteCastMemberStatus] =
+    useDeleteCastMemberMutation();
   const { enqueueSnackbar } = useSnackbar();
 
   function handleOnPageChange(page: number) {
@@ -36,20 +37,22 @@ export const CategoryList = () => {
     setOptions({ ...options, search });
   }
 
-  async function handleDeleteCategory(id: string) {
-    await deleteCategory({ id });
+  async function handleDeleteCastMember(id: string) {
+    await deleteCastMember({ id });
   }
 
   useEffect(() => {
-    if (deleteCategoryStatus.isSuccess) {
-      enqueueSnackbar("Category deleted successfully", { variant: "success" });
-    } else if (deleteCategoryStatus.error) {
-      enqueueSnackbar("Category not deleted", { variant: "error" });
+    if (deleteCastMemberStatus.isSuccess) {
+      enqueueSnackbar("CastMember deleted successfully", {
+        variant: "success",
+      });
+    } else if (deleteCastMemberStatus.error) {
+      enqueueSnackbar("CastMember not deleted", { variant: "error" });
     }
-  }, [deleteCategoryStatus, enqueueSnackbar]);
+  }, [deleteCastMemberStatus, enqueueSnackbar]);
 
   if (error) {
-    return <Typography>Error fetching categories</Typography>;
+    return <Typography>Error fetching CastMembers</Typography>;
   }
 
   return (
@@ -59,14 +62,14 @@ export const CategoryList = () => {
           variant="contained"
           color="secondary"
           component={Link}
-          to="/categories/create"
+          to="/cast-members/create"
           style={{ marginBottom: "1rem" }}
         >
           + New
         </Button>
       </Box>
 
-      <CategoriesTable
+      <CastMembersTable
         data={data}
         perPage={options.perPage}
         rowsPerPage={options.rowsPerPage}
@@ -74,7 +77,7 @@ export const CategoryList = () => {
         handleOnPageChange={handleOnPageChange}
         handleFilterChange={handleFilterChange}
         handleOnPageSizeChange={handleOnPageSizeChange}
-        handleDelete={handleDeleteCategory}
+        handleDelete={handleDeleteCastMember}
       />
     </Box>
   );

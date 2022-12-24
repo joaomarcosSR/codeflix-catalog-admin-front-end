@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Category } from "../../types/Category";
 import {
-  defaultCategory,
+  initialState,
   useGetCategoryByIdQuery,
   useUpdateCategoryMutation,
 } from "./CategorySlice";
@@ -13,10 +13,8 @@ import { CategoryForm } from "./components/CategoryForm";
 export const CategoryEdit = () => {
   const id = useParams().id || "";
   const { data: category, isFetching } = useGetCategoryByIdQuery(id);
-  const [updateCategory, updateCategoryStatus] = useUpdateCategoryMutation();
-  const [categoryState, setCategoryState] = useState<Category>(
-    defaultCategory()
-  );
+  const [updateCategory, status] = useUpdateCategoryMutation();
+  const [categoryState, setCategoryState] = useState<Category>(initialState);
   const { enqueueSnackbar } = useSnackbar();
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -26,7 +24,6 @@ export const CategoryEdit = () => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    console.log(name, value);
     setCategoryState({ ...categoryState, [name]: value });
   };
   const handleToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,16 +38,15 @@ export const CategoryEdit = () => {
   }, [category]);
 
   useEffect(() => {
-    if (updateCategoryStatus.isSuccess) {
+    if (status.isSuccess) {
       enqueueSnackbar("Category updated successfully", { variant: "success" });
     }
-    if (updateCategoryStatus.error) {
-      enqueueSnackbar(
-        `Category not updated. Error: ${updateCategoryStatus.error}`,
-        { variant: "error" }
-      );
+    if (status.error) {
+      enqueueSnackbar(`Category not updated.`, {
+        variant: "error",
+      });
     }
-  }, [updateCategoryStatus, enqueueSnackbar]);
+  }, [status, enqueueSnackbar]);
 
   return (
     <Box>
@@ -64,7 +60,7 @@ export const CategoryEdit = () => {
         <CategoryForm
           category={categoryState}
           isLoading={isFetching}
-          isDisabled={updateCategoryStatus.isLoading}
+          isDisabled={status.isLoading}
           handleSubmit={handleSubmit}
           handleChange={handleChange}
           handleToggle={handleToggle}
