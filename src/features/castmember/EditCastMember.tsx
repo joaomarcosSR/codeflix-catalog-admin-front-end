@@ -11,7 +11,7 @@ import {
 import { CastMemberForm } from "./components/CastMemberForm";
 
 export const CastMemberEdit = () => {
-  const id = useParams().id || "";
+  const id = useParams().id as string;
   const { data: castMember, isFetching } = useGetCastMemberByIdQuery(id);
   const [updateCastMember, status] = useUpdateCastMemberMutation();
   const [castMemberState, setCastMemberState] =

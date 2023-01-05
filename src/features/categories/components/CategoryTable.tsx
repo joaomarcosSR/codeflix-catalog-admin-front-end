@@ -1,5 +1,5 @@
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import {
   DataGrid,
   GridColDef,
@@ -94,6 +94,7 @@ export function CategoriesTable({
         color="secondary"
         onClick={() => handleDelete(row.value)}
         aria-label="delete"
+        data-testid="delete-button"
       >
         <DeleteIcon />
       </IconButton>
@@ -124,6 +125,7 @@ export function CategoriesTable({
         checkboxSelection={false}
         disableColumnFilter={true}
         disableColumnSelector={true}
+        disableVirtualization={true}
         disableDensitySelector={true}
         disableSelectionOnClick={true}
         rowsPerPageOptions={rowsPerPage}

@@ -91,6 +91,7 @@ export function CastMembersTable({
         color="secondary"
         onClick={() => handleDelete(row.value)}
         aria-label="delete"
+        data-testid="delete-button"
       >
         <DeleteIcon />
       </IconButton>
@@ -118,6 +119,7 @@ export function CastMembersTable({
         checkboxSelection={false}
         disableColumnFilter={true}
         disableColumnSelector={true}
+        disableVirtualization={true}
         disableDensitySelector={true}
         disableSelectionOnClick={true}
         rowsPerPageOptions={rowsPerPage}

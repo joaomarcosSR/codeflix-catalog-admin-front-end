@@ -11,7 +11,7 @@ import {
 import { CategoryForm } from "./components/CategoryForm";
 
 export const CategoryEdit = () => {
-  const id = useParams().id || "";
+  const id = useParams().id as string;
   const { data: category, isFetching } = useGetCategoryByIdQuery(id);
   const [updateCategory, status] = useUpdateCategoryMutation();
   const [categoryState, setCategoryState] = useState<Category>(initialState);
@@ -42,7 +42,7 @@ export const CategoryEdit = () => {
       enqueueSnackbar("Category updated successfully", { variant: "success" });
     }
     if (status.error) {
-      enqueueSnackbar(`Category not updated.`, {
+      enqueueSnackbar("Category not updated.", {
         variant: "error",
       });
     }

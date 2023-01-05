@@ -46,6 +46,7 @@ function getCategoryById(id: string): string {
 
 function getCategories({ page = 0, perPage = 10, search = "" }): string {
   const params = { page, perPage, search };
+  // console.log(`${endpointUrl}?${parseQueryParams(params)}`);
   return `${endpointUrl}?${parseQueryParams(params)}`;
 }
 

@@ -3,14 +3,14 @@ import { Header } from "./components/Header";
 import { Layout } from "./components/Layout";
 import { appTheme } from "./config/theme";
 import { Routes, Route } from "react-router-dom";
-import { CategoryList } from "./features/categories/listCategory";
-import { CategoryCreate } from "./features/categories/createCategory";
-import { CategoryEdit } from "./features/categories/editCategory";
+import { CategoryList } from "./features/categories/ListCategory";
+import { CategoryCreate } from "./features/categories/CreateCategory";
+import { CategoryEdit } from "./features/categories/EditCategory";
 import { Typography } from "@mui/material";
 import { SnackbarProvider } from "notistack";
-import { CastMemberList } from "./features/castmember/listCastMember";
-import { CastMemberCreate } from "./features/castmember/createCastMember";
-import { CastMemberEdit } from "./features/castmember/editCastMember";
+import { CastMemberList } from "./features/castmember/ListCastMember";
+import { CastMemberCreate } from "./features/castmember/CreateCastMember";
+import { CastMemberEdit } from "./features/castmember/EditCastMember";
 
 const NOT_FOUND = () => (
   <Box sx={{ color: "white" }}>
