@@ -1,12 +1,12 @@
 import { Box, ThemeProvider } from "@mui/system";
 import { Header } from "./components/Header";
 import { Layout } from "./components/Layout";
-import { appTheme } from "./config/theme";
+import { darkTheme, lightTheme } from "./config/theme";
 import { Routes, Route } from "react-router-dom";
 import { CategoryList } from "./features/categories/ListCategory";
 import { CategoryCreate } from "./features/categories/CreateCategory";
 import { CategoryEdit } from "./features/categories/EditCategory";
-import { Typography } from "@mui/material";
+import { CssBaseline, Typography } from "@mui/material";
 import { SnackbarProvider } from "notistack";
 import { CastMemberList } from "./features/castmember/ListCastMember";
 import { CastMemberCreate } from "./features/castmember/CreateCastMember";
@@ -17,17 +17,23 @@ import { GenreList } from "./features/genres/GenreList";
 import { VideoList } from "./features/video/VideoList";
 import { VideoCreate } from "./features/video/VideoCreate";
 import { VideoEdit } from "./features/video/VideoEdit";
+import { useEffect, useState } from "react";
+import { useLocalStorage } from "./hooks/useLocalStorage";
+import { useAppTheme } from "./hooks/userAppTheme";
 
 const NOT_FOUND = () => (
-  <Box sx={{ color: "white" }}>
+  <Box sx={{ color: "#666" }}>
     <Typography variant="h1">404</Typography>
     <Typography variant="h2">Page not found</Typography>
   </Box>
 );
 
 export default function App() {
+  const [theme, toggleTheme] = useAppTheme();
+
   return (
-    <ThemeProvider theme={appTheme}>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
       <SnackbarProvider
         autoHideDuration={2000}
         maxSnack={3}
@@ -40,10 +46,9 @@ export default function App() {
           component="main"
           sx={{
             height: "100vh",
-            backgroundColor: (theme) => theme.palette.grey[900],
           }}
         >
-          <Header />
+          <Header theme={theme.palette.mode} toggleTheme={toggleTheme} />
           <Layout>
             <Routes>
               <Route path="/" element={<CategoryList />} />
