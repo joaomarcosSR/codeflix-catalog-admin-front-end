@@ -31,7 +31,7 @@ export const CategoryList = () => {
 
   function handleFilterChange(filterModel: GridFilterModel) {
     const search = filterModel.quickFilterValues?.length
-      ? filterModel.quickFilterValues.join("")
+      ? filterModel.quickFilterValues.join(" ")
       : "";
     setOptions({ ...options, search });
   }

@@ -11,6 +11,12 @@ import { SnackbarProvider } from "notistack";
 import { CastMemberList } from "./features/castmember/ListCastMember";
 import { CastMemberCreate } from "./features/castmember/CreateCastMember";
 import { CastMemberEdit } from "./features/castmember/EditCastMember";
+import { GenreCreate } from "./features/genres/GenreCreate";
+import { GenreEdit } from "./features/genres/GenreEdit";
+import { GenreList } from "./features/genres/GenreList";
+import { VideoList } from "./features/video/VideoList";
+import { VideoCreate } from "./features/video/VideoCreate";
+import { VideoEdit } from "./features/video/VideoEdit";
 
 const NOT_FOUND = () => (
   <Box sx={{ color: "white" }}>
@@ -54,6 +60,14 @@ export default function App() {
                 path="cast-members/edit/:id"
                 element={<CastMemberEdit />}
               />
+
+              <Route path="genres" element={<GenreList />} />
+              <Route path="genres/create" element={<GenreCreate />} />
+              <Route path="genres/edit/:id" element={<GenreEdit />} />
+
+              <Route path="videos" element={<VideoList />} />
+              <Route path="videos/create" element={<VideoCreate />} />
+              <Route path="videos/edit/:id" element={<VideoEdit />} />
 
               <Route path="*" element={<NOT_FOUND />} />
             </Routes>

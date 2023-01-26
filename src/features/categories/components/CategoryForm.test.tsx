@@ -20,7 +20,7 @@ const props = {
 };
 
 describe("CategoryForm", () => {
-  it("should render castMember form correctly", () => {
+  it("should render Category form correctly", () => {
     const { asFragment } = render(<CategoryForm {...props} />, {
       wrapper: BrowserRouter,
     });

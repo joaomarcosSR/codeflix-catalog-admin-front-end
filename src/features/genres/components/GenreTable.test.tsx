@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-import { CategoriesTable } from "./CategoryTable";
+import { GenreTable } from "./GenreTable";
 
 const props = {
   data: undefined,
@@ -13,26 +13,26 @@ const props = {
   handleDelete: jest.fn(),
 };
 
-describe("CategoryTable", () => {
-  it("should render Category table correctly", () => {
-    const { asFragment } = render(<CategoriesTable {...props} />, {
+describe("GenreTable", () => {
+  it("should render Genre table correctly", () => {
+    const { asFragment } = render(<GenreTable {...props} />, {
       wrapper: BrowserRouter,
     });
 
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it("should render Category table with loading", () => {
-    const { asFragment } = render(<CategoriesTable {...props} isFetching />, {
+  it("should render Genre table with loading", () => {
+    const { asFragment } = render(<GenreTable {...props} isFetching />, {
       wrapper: BrowserRouter,
     });
 
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it("should render Category table with empty data", () => {
+  it("should render Genre table with empty data", () => {
     const { asFragment } = render(
-      <CategoriesTable {...props} data={{ items: [] } as any} />,
+      <GenreTable {...props} data={{ items: [] } as any} />,
       {
         wrapper: BrowserRouter,
       }
@@ -41,7 +41,7 @@ describe("CategoryTable", () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it("should render Category table with data", () => {
+  it("should render Genre table with data", () => {
     const data = {
       current_page: 0,
       per_page: 10,
@@ -51,14 +51,13 @@ describe("CategoryTable", () => {
         {
           id: "1",
           name: "Test",
-          description: "Description test",
           is_active: false,
           created_at: "2022-10-01T00:00:00",
           deleted_at: null,
         },
       ],
     };
-    const { asFragment } = render(<CategoriesTable {...props} data={data} />, {
+    const { asFragment } = render(<GenreTable {...props} data={data} />, {
       wrapper: BrowserRouter,
     });
 
@@ -75,7 +74,6 @@ describe("CategoryTable", () => {
         {
           id: "1",
           name: "Test",
-          description: "Description test",
           is_active: false,
           created_at: "2022-10-01T00:00:00",
           deleted_at: null,
@@ -83,14 +81,13 @@ describe("CategoryTable", () => {
         {
           id: "2",
           name: "Pedro",
-          description: "Description Pedro",
           is_active: true,
           created_at: "2022-10-05T00:00:00",
           deleted_at: "2022-10-09T00:00:00",
         },
       ],
     };
-    const { asFragment } = render(<CategoriesTable {...props} data={data} />, {
+    const { asFragment } = render(<GenreTable {...props} data={data} />, {
       wrapper: BrowserRouter,
     });
 

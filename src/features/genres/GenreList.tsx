@@ -1,15 +1,13 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import { GridFilterModel } from "@mui/x-data-grid";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  useDeleteCastMemberMutation,
-  useGetCastMembersQuery,
-} from "./CastMemberSlice";
-import { CastMembersTable } from "./components/CastMemberTable";
+import { GenreTable } from "./components/GenreTable";
+import { useDeleteGenreMutation, useGetGenresQuery } from "./GenreSlice";
 
-export const CastMemberList = () => {
+export const GenreList = () => {
   const [options, setOptions] = useState({
     page: 0,
     perPage: 10,
@@ -17,9 +15,8 @@ export const CastMemberList = () => {
     rowsPerPage: [10, 25, 50, 100],
   });
 
-  const { data, isFetching, error } = useGetCastMembersQuery(options);
-  const [deleteCastMember, deleteCastMemberStatus] =
-    useDeleteCastMemberMutation();
+  const { data, isFetching, error } = useGetGenresQuery(options);
+  const [deleteGenre, deleteGenreStatus] = useDeleteGenreMutation();
   const { enqueueSnackbar } = useSnackbar();
 
   function handleOnPageChange(page: number) {
@@ -37,22 +34,20 @@ export const CastMemberList = () => {
     setOptions({ ...options, search });
   }
 
-  async function handleDeleteCastMember(id: string) {
-    await deleteCastMember({ id });
+  async function handleDeleteGenre(id: string) {
+    await deleteGenre({ id });
   }
 
   useEffect(() => {
-    if (deleteCastMemberStatus.isSuccess) {
-      enqueueSnackbar("CastMember deleted successfully", {
-        variant: "success",
-      });
-    } else if (deleteCastMemberStatus.error) {
-      enqueueSnackbar("CastMember not deleted", { variant: "error" });
+    if (deleteGenreStatus.isSuccess) {
+      enqueueSnackbar("Genre deleted successfully", { variant: "success" });
+    } else if (deleteGenreStatus.error) {
+      enqueueSnackbar("Genre not deleted", { variant: "error" });
     }
-  }, [deleteCastMemberStatus, enqueueSnackbar]);
+  }, [deleteGenreStatus, enqueueSnackbar]);
 
   if (error) {
-    return <Typography>Error fetching CastMembers</Typography>;
+    return <Typography>Error fetching genres</Typography>;
   }
 
   return (
@@ -62,14 +57,14 @@ export const CastMemberList = () => {
           variant="contained"
           color="secondary"
           component={Link}
-          to="/cast-members/create"
+          to="/genres/create"
           style={{ marginBottom: "1rem" }}
         >
           + New
         </Button>
       </Box>
 
-      <CastMembersTable
+      <GenreTable
         data={data}
         perPage={options.perPage}
         rowsPerPage={options.rowsPerPage}
@@ -77,7 +72,7 @@ export const CastMemberList = () => {
         handleOnPageChange={handleOnPageChange}
         handleFilterChange={handleFilterChange}
         handleOnPageSizeChange={handleOnPageSizeChange}
-        handleDelete={handleDeleteCastMember}
+        handleDelete={handleDeleteGenre}
       />
     </Box>
   );

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CategoryTable should render Category table correctly 1`] = `
+exports[`GenreTable should render Genre table correctly 1`] = `
 <DocumentFragment>
   <div
     class="MuiBox-root css-1fat0eg"
@@ -681,7 +681,7 @@ exports[`CategoryTable should render Category table correctly 1`] = `
 </DocumentFragment>
 `;
 
-exports[`CategoryTable should render Category table with data 1`] = `
+exports[`GenreTable should render Genre table with data 1`] = `
 <DocumentFragment>
   <div
     class="MuiBox-root css-1fat0eg"
@@ -1245,7 +1245,7 @@ exports[`CategoryTable should render Category table with data 1`] = `
                     tabindex="-1"
                   >
                     <a
-                      href="/categories/edit/1"
+                      href="/genres/edit/1"
                       style="text-decoration: none;"
                     >
                       <p
@@ -1450,7 +1450,7 @@ exports[`CategoryTable should render Category table with data 1`] = `
 </DocumentFragment>
 `;
 
-exports[`CategoryTable should render Category table with empty data 1`] = `
+exports[`GenreTable should render Genre table with empty data 1`] = `
 <DocumentFragment>
   <div
     class="MuiBox-root css-1fat0eg"
@@ -2131,7 +2131,7 @@ exports[`CategoryTable should render Category table with empty data 1`] = `
 </DocumentFragment>
 `;
 
-exports[`CategoryTable should render Category table with loading 1`] = `
+exports[`GenreTable should render Genre table with loading 1`] = `
 <DocumentFragment>
   <div
     class="MuiBox-root css-1fat0eg"
@@ -2830,7 +2830,7 @@ exports[`CategoryTable should render Category table with loading 1`] = `
 </DocumentFragment>
 `;
 
-exports[`CategoryTable should render correct type 1`] = `
+exports[`GenreTable should render correct type 1`] = `
 <DocumentFragment>
   <div
     class="MuiBox-root css-1fat0eg"
@@ -3394,7 +3394,7 @@ exports[`CategoryTable should render correct type 1`] = `
                     tabindex="-1"
                   >
                     <a
-                      href="/categories/edit/1"
+                      href="/genres/edit/1"
                       style="text-decoration: none;"
                     >
                       <p
@@ -3490,7 +3490,7 @@ exports[`CategoryTable should render correct type 1`] = `
                     tabindex="-1"
                   >
                     <a
-                      href="/categories/edit/2"
+                      href="/genres/edit/2"
                       style="text-decoration: none;"
                     >
                       <p
