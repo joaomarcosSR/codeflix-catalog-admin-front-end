@@ -3,8 +3,8 @@ import { Box } from "@mui/system";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { uniqueValue } from "../../types/Base";
 import { Genre } from "../../types/Genre";
-import { useGetCategoryByIdQuery } from "../categories/CategorySlice";
 import { GenreForm } from "./components/GenreForm";
 import {
   initialState,
@@ -49,7 +49,7 @@ export const GenreEdit = () => {
 
   useEffect(() => {
     if (genre && allCategories) {
-      const genreCategoriesId = {} as { [key: string]: boolean };
+      const genreCategoriesId: uniqueValue = {};
       (genre.categories_id || []).forEach(
         (id) => (genreCategoriesId[id] = true)
       );

@@ -11,11 +11,12 @@ import {
 } from "@mui/material";
 
 type Props = {
-  toggleTheme: () => void;
   theme: string;
+  toggleTheme: () => void;
+  handleDrawerToggle?: () => void;
 };
 
-export function Header({ theme, toggleTheme: toggleTheme }: Props) {
+export function Header({ theme, toggleTheme, handleDrawerToggle }: Props) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -25,6 +26,7 @@ export function Header({ theme, toggleTheme: toggleTheme }: Props) {
             edge="start"
             color="inherit"
             aria-label="menu"
+            onClick={handleDrawerToggle}
             sx={{ mr: 2 }}
           >
             <MenuIcon />

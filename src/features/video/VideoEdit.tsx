@@ -2,6 +2,8 @@ import { Box, Paper, Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useUniqueCategories } from "../../hooks/useUniqueCategories";
+import { uniqueValue } from "../../types/Base";
 import { Video } from "../../types/Video";
 import { VideoForm } from "./components/VideoForm";
 import {
@@ -24,6 +26,11 @@ export const VideoEdit = () => {
   const [updateVideo, status] = useUpdateVideoMutation();
 
   const [videoState, setVideoState] = useState<Video>(initialState);
+  const [categories, setCategories] = useUniqueCategories(
+    videoState,
+    setVideoState,
+    allCategories?.items
+  );
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -54,8 +61,9 @@ export const VideoEdit = () => {
         genres: genreList,
         castMembers: castMemberList,
       });
+      setCategories(categoryList);
     }
-  }, [video, allCastMembers, allCategories, allGenres]);
+  }, [video, allCastMembers, allCategories, allGenres, setCategories]);
 
   useEffect(() => {
     if (status.isSuccess) {
@@ -79,7 +87,7 @@ export const VideoEdit = () => {
         <VideoForm
           video={videoState}
           genres={allGenres?.items || []}
-          categories={allCategories?.items || []}
+          categories={categories}
           castMembers={allCastMembers?.items || []}
           isLoading={status.isLoading || !videoState.id}
           isDisabled={isFetching}
@@ -97,7 +105,7 @@ function getFilteredList<T extends { id: string }>(
 ): T[] {
   if (!filter) return [];
 
-  const filterValues = {} as { [key: string]: boolean };
+  const filterValues: uniqueValue = {};
   filter.forEach((value) => (filterValues[value] = true));
 
   return (data || []).filter((item) => filterValues[item.id]);

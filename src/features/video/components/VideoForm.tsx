@@ -2,17 +2,15 @@ import {
   Box,
   Button,
   FormControl,
-  FormControlLabel,
   FormGroup,
   FormLabel,
   Grid,
-  Radio,
   RadioGroup,
   TextField,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { AutoCompleteFields } from "../../../components/AutoCompleteFields";
-import { Rating, RatingTypes } from "../../../components/Rating";
+import { InputFile } from "../../../components/InputFile";
 import { RatingList } from "../../../components/RatingList";
 import { CastMember } from "../../../types/CastMember";
 import { Category } from "../../../types/Category";
@@ -29,15 +27,6 @@ type Props = {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
-
-const ratingOptions: { label: string; value: RatingTypes }[] = [
-  { label: "L", value: "L" },
-  { label: "10", value: "10" },
-  { label: "12", value: "12" },
-  { label: "14", value: "14" },
-  { label: "16", value: "16" },
-  { label: "18", value: "18" },
-];
 
 export const VideoForm = ({
   video,
@@ -115,10 +104,10 @@ export const VideoForm = ({
 
             <Grid item xs={12}>
               <AutoCompleteFields
-                name="categories"
-                label="Categories"
-                options={categories}
-                value={video.categories}
+                name="castMembers"
+                label="CastMembers"
+                options={castMembers}
+                value={video.castMembers}
                 isLoading={isLoading}
                 isDisabled={isDisabled}
                 handleChange={handleChange}
@@ -139,10 +128,10 @@ export const VideoForm = ({
 
             <Grid item xs={12}>
               <AutoCompleteFields
-                name="castMembers"
-                label="CastMembers"
-                options={castMembers}
-                value={video.castMembers}
+                name="categories"
+                label="Categories"
+                options={categories}
+                value={video.categories}
                 isLoading={isLoading}
                 isDisabled={isDisabled}
                 handleChange={handleChange}
@@ -166,6 +155,13 @@ export const VideoForm = ({
                 <RatingList isDisabled={isDisabled} />
               </RadioGroup>
             </FormGroup>
+
+            <FormControl fullWidth>
+              <FormLabel component="legend">Image</FormLabel>
+              <InputFile
+                onChange={() => console.log("on change input file.")}
+              />
+            </FormControl>
           </Grid>
 
           <Grid item xs={12}>

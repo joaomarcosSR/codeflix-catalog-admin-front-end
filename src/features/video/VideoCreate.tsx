@@ -1,6 +1,7 @@
 import { Box, Paper, Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
+import { useUniqueCategories } from "../../hooks/useUniqueCategories";
 import { Video } from "../../types/Video";
 import { VideoForm } from "./components/VideoForm";
 import {
@@ -19,6 +20,11 @@ export const VideoCreate = () => {
   const [createVideo, status] = useCreateVideoMutation();
 
   const [videoState, setVideoState] = useState<Video>(initialState);
+  const [categories] = useUniqueCategories(
+    videoState,
+    setVideoState,
+    allCategories?.items
+  );
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -52,7 +58,7 @@ export const VideoCreate = () => {
         <VideoForm
           video={videoState}
           genres={allGenres?.items || []}
-          categories={allCategories?.items || []}
+          categories={categories}
           castMembers={allCastMembers?.items || []}
           isLoading={status.isLoading}
           isDisabled={status.isLoading}

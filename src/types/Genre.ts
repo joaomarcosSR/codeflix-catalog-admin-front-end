@@ -30,6 +30,7 @@ export interface ListGenre {
   id: string;
   name: string;
   is_active: boolean;
+  categories_id: string[];
   created_at: string;
   deleted_at: null | string;
 }
